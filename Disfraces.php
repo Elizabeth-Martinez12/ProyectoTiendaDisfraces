@@ -17,9 +17,11 @@ function obtenerDatosDeTabla($servidor, $usuario, $costume_name, $baseDeDatos, $
         die("La conexión a la base de datos ha fallado: " . mysqli_connect_error());
     }
 
-    $sql = "SELECT costumes.*, costume_categories.name, costume_comments.comment_text FROM costumes
+    $sql = "SELECT costumes.*, costume_categories.name, costume_comments.comment_text 
+            FROM costumes
             LEFT JOIN costume_categories ON costumes.idCategory = costume_categories.id
-            LEFT JOIN costume_comments ON costumes.id = costume_comments.costume_id;";
+            LEFT JOIN costume_comments ON costumes.id = costume_comments.costume_id
+            WHERE costumes.id = costume_comments.costume_id;";  
     $result = mysqli_query($conn, $sql);
 
     $datos = array();
@@ -37,6 +39,7 @@ function obtenerDatosDeTabla($servidor, $usuario, $costume_name, $baseDeDatos, $
 
     return $datos;
 }
+
 ?>
 
 <br>
@@ -67,19 +70,66 @@ function obtenerDatosDeTabla($servidor, $usuario, $costume_name, $baseDeDatos, $
                 <td><?= $fila["price"] ?></td>
                 <td><?= $fila["stock"] ?></td>
                 <td>
-                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#mostrarComentarioModal<?= $fila["comment_text"] ?>">Comentarios</button>
+                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#comentariosModal<?= $fila["id"] ?>">Ver Comentarios</button>
                 </td>
                 <td>
                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editarDisfracesModal<?= $fila["id"] ?>">Editar</button>
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarDisfracesModal<?= $fila["id"] ?>">Eliminar</button>
                 </td>
+
             </tr>
+
+            <div class="modal fade" id="comentariosModal<?= $fila["id"] ?>" tabindex="-1" aria-labelledby="comentariosModalLabel<?= $fila["id"] ?>" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="comentariosModalLabel<?= $fila["id"] ?>">Comentarios para <?= $fila["costume_name"] ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
         <?php endforeach; ?>
     </tbody>
 </table>
 
+<script>
+<?php foreach ($datos as $fila): ?>
+    document.getElementById('comentariosModal<?= $fila["id"] ?>').addEventListener('show.bs.modal', function (event) {
+        var modal = event.target;
+        var disfrazId = <?= $fila["id"] ?>;
+
+        obtenerComentariosAjax(disfrazId, function(comentarios) {
+            var modalBody = modal.querySelector('.modal-body');
+            modalBody.innerHTML = '';
+
+            if (comentarios.length > 0) {
+                var listaComentarios = document.createElement('ul');
+                comentarios.forEach(function(comentario) {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = comentario.comment_text;
+                    listaComentarios.appendChild(listItem);
+                });
+                modalBody.appendChild(listaComentarios);
+            } else {
+                modalBody.textContent = 'No hay comentarios disponibles.';
+            }
+        });
+    });
+<?php endforeach; ?>
+</script>
 
 
+<script>
+function obtenerComentariosAjax(disfrazId, callback) {
+    fetch('obtener_comentario.php?disfraz_id=' + disfrazId)
+        .then(response => response.json())
+        .then(data => callback(data))
+        .catch(error => console.error('Error al obtener comentarios:', error));
+}
+</script>
 
 <div class="modal fade" id="agregarDisfracesModal" tabindex="-1" aria-labelledby="agregarDisfracesModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -182,12 +232,13 @@ function obtenerDatosDeTabla($servidor, $usuario, $costume_name, $baseDeDatos, $
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>¿Estás seguro de que deseas eliminar el disfraz "<?= $fila["name"] ?>"?</p>
+                    <p>¿Estás seguro de que deseas eliminar el disfraz "<?= $fila["costume_name"] ?>"?</p>
                     <a href="procesar_eliminar_disfraces.php?id=<?= $fila["id"] ?>" class="btn btn-danger">Eliminar</a>
                 </div>
             </div>
         </div>
     </div>
+    
 <?php endforeach; ?>
 
 <br>
