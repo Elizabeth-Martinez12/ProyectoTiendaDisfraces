@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result) {
         if (mysqli_num_rows($result) == 1) {
-            // Iniciar sesión y redirigir al panel de control
+            // Iniciar sesión y redirigir
             $row = mysqli_fetch_assoc($result);
             $_SESSION['usuario_id'] = $row['id'];
             $_SESSION['usuario'] = $row['username'];
