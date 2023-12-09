@@ -25,11 +25,11 @@
                         <a class="nav-link" aria-current="page" href="Accesorios.php">Accesorios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="Transacciones.php">Transacciones</a>
+                        <a class="nav-link" aria-current="page" href="Ventas.php">Ventas</a>
                     </li>
                 </ul>
             </div>
-            <a href="#" class="btn btn-danger">Cerrar Sesión</a>
+            <a href="proyectoDisfraces/InicioSesion" class="btn btn-danger">Cerrar Sesión</a>
         </div>
     </nav>
     <div class="container mt-5">

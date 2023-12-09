@@ -39,7 +39,7 @@
     ?>
 
     <br>
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarPerfilModal">Agregar Perfil</button>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregarAccesorioModal">Agregar Accesorio</button>
 
   
 <br>
@@ -70,34 +70,50 @@
                 <td><?= $fila["price"] ?></td>
                 <td>
                     <!-- Botones para editar y eliminar -->
-                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editarPerfilModal<?= $fila["id"] ?>">Editar</button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarPerfilModal<?= $fila["id"] ?>">Eliminar</button>
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editarAccesorioModal<?= $fila["id"] ?>">Editar</button>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarAccesorioModal<?= $fila["id"] ?>">Eliminar</button>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 
-    <div class="modal fade" id="agregarPerfilModal" tabindex="-1" aria-labelledby="agregarPerfilModalLabel" aria-hidden="true">
+    <div class="modal fade" id="agregarAccesorioModal" tabindex="-1" aria-labelledby="agregarPerfilModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="agregarPerfilModalLabel">Agregar Perfil</h5>
+                    <h5 class="modal-title" id="agregarPerfilModalLabel">Agregar Accesorios</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="procesar_agregar_perfil.php">
+                    <form method="POST" action="procesar_agregar_accesorios.php">
                         <div class="mb-3">
-                            <label for="profile_name" class="form-label">Nombre de perfil</label>
-                            <input type="text" class="form-control" id="profile_name" name="profile_name" required>
+                            <label for="illustration" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" id="illustration" name="illustration" required>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Descripción</label>
-                            <textarea class="form-control" id="description" name="description" required></textarea>
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" required></input>
                         </div>
                         <div class="mb-3">
-                            <label for="status" class="form-label">Estado</label>
-                            <input type="text" class="form-control" id="status" name="status" required>
+                            <label for="quantity" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" required></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Tipo</label>
+                            <input type="text" class="form-control" id="type" name="type" required></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="material" class="form-label">Material</label>
+                            <input type="text" class="form-control" id="material" name="material" required></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Categoria</label>
+                            <input class="form-control" id="category" name="category" required></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Precio</label>
+                            <input type="double" class="form-control" id="price" name="price" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
@@ -108,30 +124,39 @@
 
 
 <?php foreach ($datos as $fila) : ?>
-    <div class="modal fade" id="editarPerfilModal<?= $fila["id"] ?>" tabindex="-1" aria-labelledby="editarPerfilModalLabel<?= $fila["id"] ?>" aria-hidden="true">
+    <div class="modal fade" id="editarAccesorioModal<?= $fila["id"] ?>" tabindex="-1" aria-labelledby="editarAccesorioModalLabel<?= $fila["id"] ?>" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editarPerfilModalLabel<?= $fila["id"] ?>">Editar Perfil</h5>
+                    <h5 class="modal-title" id="editarAccesorioModalLabel<?= $fila["id"] ?>">Editar Accesorio</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Aquí puedes agregar el formulario para editar un perfil -->
-                    <!-- Utiliza los valores de $fila para prellenar los campos -->
-                    <!-- Asegúrate de incluir los campos necesarios, como profile_name, description, status, etc. -->
-                    <form method="POST" action="procesar_editar_perfil.php">
+                    <form method="POST" action="procesar_editar_accesorios.php">
                         <input type="hidden" name="id" value="<?= $fila["id"] ?>">
                         <div class="mb-3">
-                            <label for="profile_name" class="form-label">Nombre de perfil</label>
-                            <input type="text" class="form-control" id="profile_name" name="profile_name" value="<?= $fila["profile_name"] ?>" required>
+                            <label for="illustration" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" id="illustration" name="illustration" value="<?= $fila["illustration"] ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Descripción</label>
-                            <textarea class="form-control" id="description" name="description" required><?= $fila["description"] ?></textarea>
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" required><?= $fila["name"] ?></input>
                         </div>
                         <div class="mb-3">
-                            <label for="status" class="form-label">Estado</label>
-                            <input type="text" class="form-control" id="status" name="status" value="<?= $fila["status"] ?>" required>
+                            <label for="quantity" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" value="<?= $fila["quantity"] ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Tipo</label>
+                            <input type="text" class="form-control" id="type" name="type" value="<?= $fila["type"] ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="material" class="form-label">Nombre de perfil</label>
+                            <input type="text" class="form-control" id="material" name="material" value="<?= $fila["material"] ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Precio</label>
+                            <input type="text" class="form-control" id="price" name="price" value="<?= $fila["price"] ?>" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
@@ -143,18 +168,18 @@
 
 
 <?php foreach ($datos as $fila) : ?>
-    <div class="modal fade" id="eliminarPerfilModal<?= $fila["id"] ?>" tabindex="-1" aria-labelledby="eliminarPerfilModalLabel<?= $fila["id"] ?>" aria-hidden="true">
+    <div class="modal fade" id="eliminarAccesorioModal<?= $fila["id"] ?>" tabindex="-1" aria-labelledby="eliminarAccesorioModalLabel<?= $fila["id"] ?>" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="eliminarPerfilModalLabel<?= $fila["id"] ?>">Eliminar Perfil</h5>
+                    <h5 class="modal-title" id="eliminarAccesorioModalLabel<?= $fila["id"] ?>">Eliminar Perfil</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Confirmación de eliminación -->
-                    <p>¿Estás seguro de que deseas eliminar el perfil "<?= $fila["profile_name"] ?>"?</p>
+                    <p>¿Estás seguro de que deseas eliminar el accesorio "<?= $fila["name"] ?>"?</p>
                     <!-- Enviar el ID al archivo de procesamiento de eliminación -->
-                    <a href="procesar_eliminar_perfil.php?id=<?= $fila["id"] ?>" class="btn btn-danger">Eliminar</a>
+                    <a href="procesar_eliminar_accesorio.php?id=<?= $fila["id"] ?>" class="btn btn-danger">Eliminar</a>
                 </div>
             </div>
         </div>
@@ -168,7 +193,7 @@
 <script>
 document.getElementById('exportCSV').addEventListener('click', function() {
     // Llama a la función de exportación
-    exportTableToCSV('user_profiles.csv');
+    exportTableToCSV('accesories.csv');
 });
 
 function exportTableToCSV(filename) {
