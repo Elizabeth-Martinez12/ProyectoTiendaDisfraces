@@ -181,39 +181,41 @@ function obtenerComentariosAjax(disfrazId, callback) {
 
 <?php foreach ($datos as $fila) : ?>
 
-    <div class="modal fade" id="editarDisfracesModal<?= $fila["id"] ?>" tabindex="-1" aria-labelledby="editarUsuarioModalLabel<?= $fila["id"] ?>" aria-hidden="true">
+    <div class="modal fade" id="editarDisfracesModal<?= $fila["id"] ?>" tabindex="-1" aria-labelledby="editarDisfracesModalLabel<?= $fila["id"] ?>" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editarUsuarioModalLabel<?= $fila["id"] ?>">Editar Usuario</h5>
+                    <h5 class="modal-title" id="editarDisfracesModalLabel<?= $fila["id"] ?>">Editar Disfraz</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="procesar_editar_disfraces.php">
                         <input type="hidden" name="id" value="<?= $fila["id"] ?>" required>
                     <div class="mb-3">
-                            <label for="name" class="form-label">Nombre de Usuario</label>
+                            <label for="name" class="form-label">Categoria</label>
                             <input type="text" class="form-control" id="name" name="name" value="<?= $fila["name"] ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="costume_name" class="form-label">Contraseña</label>
+                            <label for="image" class="form-label">Imagen</label>
+                            <input type="url" class="form-control" id="image" name="image" value="<?= $fila["image"] ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="costume_name" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="costume_name" name="costume_name" value="<?= $fila["costume_name"] ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="costume_name" class="form-label">Estado</label>
-                            <input type="number" class="form-control" id="costume_name" name="costume_name" value="<?= $fila["costume_name"] ?>" required>
+                            <label for="description" class="form-label">Descripcion</label>
+                            <input type="description" class="form-control" id="description" name="description" value="<?= $fila["description"] ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Tipo de Usuario</label>
-                            <select name="description" class="form-control">
-                            <?php
-                                var_dump($_POST);
-                                $perfilesUnicos = array_unique(array_column($datos, 'description'));
-                                foreach ($perfilesUnicos as $perfil) : ?>
-                                    <option value="<?= $perfil ?>"><?= $perfil ?></option>
-                                <?php endforeach ?>
-                            </select>
+                            <label for="price" class="form-label">Precio</label>
+                            <input type="double" class="form-control" id="price" name="price" value="<?= $fila["price"] ?>" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Cantidad</label>
+                            <input type="numer" class="form-control" id="stock" name="stock" value="<?= $fila["stock"] ?>" required>
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
                 </div>
