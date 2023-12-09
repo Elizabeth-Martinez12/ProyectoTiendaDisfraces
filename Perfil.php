@@ -109,9 +109,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Aquí puedes agregar el formulario para editar un perfil -->
-                    <!-- Utiliza los valores de $fila para prellenar los campos -->
-                    <!-- Asegúrate de incluir los campos necesarios, como profile_name, description, status, etc. -->
                     <form method="POST" action="procesar_editar_perfil.php">
                         <input type="hidden" name="id" value="<?= $fila["id"] ?>">
                         <div class="mb-3">
